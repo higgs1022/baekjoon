@@ -1,4 +1,4 @@
-//1966.c
+//1966.c 
 
 #include <algorithm>
 #include <iostream>
