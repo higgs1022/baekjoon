@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-int minHeap[1000];
+int minHeap[100005];
 int minHeapSize = 0;
 
 int isEmpty()
@@ -48,7 +48,10 @@ void push(int n)
 
 int top()
 {
-	return minHeap[0];
+	if (minHeapSize == 0)
+		return 0;
+	else
+		return minHeap[0];
 }
 
 void pop()
@@ -85,12 +88,18 @@ void pop()
 		}
 
 		//swap
+		if (minHeap[currunt] < minHeap[parent])
+		{
+			temp = minHeap[parent];
+			minHeap[parent] = minHeap[currunt];
+			minHeap[currunt] = temp;
 
-		temp = minHeap[parent];
-		minHeap[parent] = minHeap[currunt];
-		minHeap[currunt] = temp;
+			parent = currunt;
+		}
+		else
+			break;
 
-		parent = currunt;
+		
 	}
 }
 
