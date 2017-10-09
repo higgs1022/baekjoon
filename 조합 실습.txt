@@ -1,0 +1,44 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+int an[4];
+int visit[4];
+int n = 4;
+int k = 0;
+
+void comb(int n, int k)
+{
+	if (k == n)
+	{
+		if (visit[0] == 1)
+			cout << " " << an[0];
+		if (visit[1] == 1)
+			cout << " " << an[1];
+		if (visit[2] == 1)
+			cout << " " << an[2];
+		if (visit[3] == 1)
+			cout << " " << an[3];
+		cout << '\n';
+	}
+	else
+	{
+		visit[k] = 0;
+		comb(n, k + 1);
+		visit[k] = 1;
+		comb(n, k + 1);
+	}
+		
+	
+}
+
+int main()
+{
+	an[0] = 1;
+	an[1] = 2;
+	an[2] = 3;
+	an[3] = 4;
+
+	comb(4, 0);
+}

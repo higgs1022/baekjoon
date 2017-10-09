@@ -1,0 +1,59 @@
+//https://www.acmicpc.net/problem/1907
+
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+int data_result[6];
+int visit[6];
+int arr[6];
+
+
+int perm(int n, int k) //k번째 사람이 데이더 i를 골랐다
+{
+	if (k == n)
+	{
+		//cout << "출력" << arr[0] << " " << arr[1] << " " << arr[2] << " " << arr[3] << " " << arr[4] << " " << arr[5] << '\n';
+		if (arr[0] == arr[1] && arr[1] == arr[2] && arr[3] == arr[4] && arr[4] == arr[5])
+			return 1;
+		if (arr[0] == arr[1] && arr[1] == arr[2]  && arr[3] == arr[4] + 1 && arr[4] == arr[5] + 1)
+			return 1;
+		if (arr[0] == arr[1] + 1 && arr[1] == arr[2] + 1 && arr[3] == arr[4] && arr[4] == arr[5])
+			return 1;
+		if (arr[0] == arr[1] + 1 && arr[1] == arr[2]  + 1 && arr[3] == arr[4] + 1 && arr[4] == arr[5] + 1)
+			return 1;
+	}
+	else
+	{
+		for (int i = 0; i < n; i++)
+		{
+			if (visit[i] == 0)
+			{
+				arr[k] = data_result[i];
+				visit[i] = 1;
+				if (perm(n, k + 1) == 1)
+					return 1;
+				visit[i] = 0;
+			}
+		}
+	}
+	return 0;
+}
+
+
+int main()
+{
+	data_result[0] = 0;
+	data_result[1] = 1;
+	data_result[2] = 4;
+	data_result[3] = 0;
+	data_result[4] = 6;
+	data_result[5] = 0;
+	if (perm(6, 0) == 1)
+	{
+		cout << "ok \n";
+	}
+	else
+		cout << "no";
+
+}
