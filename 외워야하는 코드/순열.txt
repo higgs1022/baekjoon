@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+
+
+//사전순으로 나오는 순열 코드
+
+int data1[5] = { 1,2,3,4,5 };
+int arr[5];
+int visit[5];
+
+void perm(int n, int k)
+{
+	if (n == k)
+	{
+		for (int i = 0; i < n; i++)
+		{
+			cout << arr[i] << " ";
+		}
+		cout << endl;
+	}
+	else
+	{
+		for (int i = 0; i < n; i++)
+		{
+			if (visit[i] == 0)
+			{
+				visit[i] = 1;
+				arr[k] = data1[i];
+				perm(n, k + 1);
+				visit[i] = 0;
+			}
+		}
+	}
+}
+
+int main()
+{
+	perm(2, 0);
+}

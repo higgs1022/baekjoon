@@ -1,0 +1,49 @@
+#include<iostream>
+using namespace std;
+
+int mylower_bound(int * arr, int n, int key) {
+	int left = 0;
+	int right = n;
+
+	int mid;
+	while (left < right) {  //start 가 end 와 같지 않고, 넘지 않을 때
+		mid = (left + right) / 2;    //중앙 index
+
+		if (arr[mid] < key) { //key 값이 중앙 값보다 크면
+			left = mid + 1;//mid 보다 오른쪽으로
+		}
+		else {  //key 값이 중앙값보다 작거나 같으면
+			right = mid;  //mid 포함 왼쪽 (포함하는 이유는 key값과 같은게 없을 때 큰수중 가장 작은값을 위해)
+		}
+	}
+	return right;
+}
+
+
+int myupper_bound(int *arr, int n, int key) {
+	int left = 0;
+	int right = n;
+	int mid;
+
+	while (left < right) {
+		mid = (left + right) / 2;
+
+		if (arr[mid] <= key) {    //lower_bound와 다른 점은 여기 '=' 하나
+			left = mid + 1;
+		}
+		else {
+			right = mid;
+		}
+	}
+	return right ;
+}
+
+int main(void) {
+	int arr[10] = { 1, 2, 4, 5, 6, 6, 7, 7, 7, 9 };
+
+	cout << "upper_bound(6) : " << myupper_bound(arr, 10, 6) << endl;
+	cout << "upper_bound(7) : " << myupper_bound(arr, 10, 7) << endl;
+	cout << "upper_bound(8) : " << myupper_bound(arr, 10, 8) << endl;
+	cout << "upper_bound(9) : " << myupper_bound(arr, 10, 9) << endl;
+	return 0;
+}
