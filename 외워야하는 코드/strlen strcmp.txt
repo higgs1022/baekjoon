@@ -1,0 +1,38 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int str_cmp(char* str1, char* str2)
+{
+	while (*str1 != 0 && *str2 != 0)
+	{
+		if (*str1 - *str2 == 0)
+		{
+			str1++;
+			str2++;
+		}
+		else
+			break;
+	}
+	return *str1 - *str2;
+}
+
+int str_len(char* str)
+{
+	int count = 0;
+	while (*str != 0)
+	{
+		count++;
+		str++;
+	}
+	return count;
+}
+
+int main()
+{
+	char str1[] = "";
+	char str2[] = "aa";
+
+	cout << strlen(str1) << endl;
+	cout << str_len(str1) << endl;
+}
