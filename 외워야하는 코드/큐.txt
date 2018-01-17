@@ -1,0 +1,43 @@
+#define QUEUE_SIZE 10000000
+
+#include <iostream>
+using namespace std;
+
+int q[QUEUE_SIZE];
+int front;
+int rear;
+
+void push(int v)
+{
+	rear++;
+	rear = rear % QUEUE_SIZE;
+	q[rear] = v;
+}
+
+int pop()
+{
+	front++;
+	front = front % QUEUE_SIZE;
+	return q[front];
+}
+
+
+int main()
+{
+	push(1);
+	push(3);
+	push(5);
+	push(7);
+	push(9);
+	pop();
+	pop();
+	push(11);
+	push(13);
+	push(15);
+	push(17);
+
+	while (front != rear)
+	{
+		cout << pop() << endl;
+	}
+}
