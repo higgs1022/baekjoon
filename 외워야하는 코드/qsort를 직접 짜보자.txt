@@ -1,12 +1,15 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include<iostream>
+#include<memory.h>
 using namespace std;
 
-void swap(void* a, void* b, int Size)
+void swap(void* a, void* b, int size)
 {
-	void* temp = malloc(Size);
-	memcpy(temp, a, Size);
-	memcpy(a, b, Size);
-	memcpy(b, temp, Size);
+	void* temp = malloc(size);
+	memcpy(temp, a, size);
+	memcpy(a, b, size);
+	memcpy(b, temp, size);
 	free(temp);
 }
 
@@ -22,17 +25,13 @@ void _qsort(void* base, int size, int left, int right, int(*cmp)(const void*, co
 		while (cmp((char*)base + (rightIndex*size), pivot) > 0) rightIndex--;
 		if (leftIndex <= rightIndex)
 		{
-			//swap( (void*)( (char*)base + (leftIndex*size) ) ,  (void*)( (char*)base + (rightIndex*size) ) );
-			void* temp = malloc(size);
-			memcpy(temp, (char*)base + (leftIndex*size), size);
-			memcpy((char*)base + (leftIndex*size), (char*)base + (rightIndex*size), size);
-			memcpy((char*)base + (rightIndex*size), temp, size);
-			free(temp);
-			
+			swap((char*)base + (leftIndex*size), (char*)base + (rightIndex*size), size);
+
 			leftIndex++;
 			rightIndex--;
 		}
 	}
+	free(pivot);
 	if (leftIndex < right) _qsort(base, size, leftIndex, right, cmp);
 	if (left < rightIndex) _qsort(base, size, left, rightIndex, cmp);
 }
@@ -42,7 +41,7 @@ void myQsort(void* base, int count, int size, int(*cmp)(const void*, const void*
 	_qsort(base, size, 0, count - 1, cmp);
 }
 
-int cmp(const void* a, const  void* b)
+int cmp(const void* a,const void* b)
 {
 	return *((int*)a) - *((int*)b);
 }
@@ -50,5 +49,5 @@ int cmp(const void* a, const  void* b)
 int main()
 {
 	int arr[10] = { 9,1,2,3,8,7,6,5,4,3 };
-	myQsort(arr, 10, sizeof(int) ,cmp);
+	myQsort(arr, 10, sizeof(int), cmp);
 }
