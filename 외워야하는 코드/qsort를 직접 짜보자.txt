@@ -1,0 +1,54 @@
+#include<iostream>
+using namespace std;
+
+void swap(void* a, void* b, int Size)
+{
+	void* temp = malloc(Size);
+	memcpy(temp, a, Size);
+	memcpy(a, b, Size);
+	memcpy(b, temp, Size);
+	free(temp);
+}
+
+void _qsort(void* base, int size, int left, int right, int(*cmp)(const void*, const void*))
+{
+	int leftIndex = left;
+	int rightIndex = right;
+	void* pivot = malloc(size);
+	memcpy(pivot, (char*)base + ((left + right) / 2)*size, size);
+	while (leftIndex <= rightIndex)
+	{
+		while (cmp(pivot, (char*)base + (leftIndex*size)) > 0) leftIndex++;
+		while (cmp((char*)base + (rightIndex*size), pivot) > 0) rightIndex--;
+		if (leftIndex <= rightIndex)
+		{
+			//swap( (void*)( (char*)base + (leftIndex*size) ) ,  (void*)( (char*)base + (rightIndex*size) ) );
+			void* temp = malloc(size);
+			memcpy(temp, (char*)base + (leftIndex*size), size);
+			memcpy((char*)base + (leftIndex*size), (char*)base + (rightIndex*size), size);
+			memcpy((char*)base + (rightIndex*size), temp, size);
+			free(temp);
+			
+			leftIndex++;
+			rightIndex--;
+		}
+	}
+	if (leftIndex < right) _qsort(base, size, leftIndex, right, cmp);
+	if (left < rightIndex) _qsort(base, size, left, rightIndex, cmp);
+}
+
+void myQsort(void* base, int count, int size, int(*cmp)(const void*, const void*))
+{
+	_qsort(base, size, 0, count - 1, cmp);
+}
+
+int cmp(const void* a, const  void* b)
+{
+	return *((int*)a) - *((int*)b);
+}
+
+int main()
+{
+	int arr[10] = { 9,1,2,3,8,7,6,5,4,3 };
+	myQsort(arr, 10, sizeof(int) ,cmp);
+}
