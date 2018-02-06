@@ -1,0 +1,32 @@
+
+template<typename T>
+void swap(T* a, T* b)
+{
+	T temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+template<typename T>
+void my_sort(T* arr, int l, int r, int(*cmp)(T a, T b))
+{
+	int L = l;
+	int R = r;
+	T pivot = arr[(l + r) / 2];
+	while (L <= R)
+	{
+		while ( cmp(arr[L], pivot) < 0)
+			L++;
+		while (cmp(pivot, arr[R]) < 0)
+			R--;
+		if (L <= R)
+		{
+			swap(&arr[L], &arr[R]);
+			L++;
+			R--;
+		}
+	}
+
+	if (l < R) my_sort(arr, l, R,cmp);
+	if (L < r) my_sort(arr, L, r,cmp);
+}
