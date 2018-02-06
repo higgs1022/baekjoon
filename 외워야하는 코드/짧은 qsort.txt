@@ -1,0 +1,27 @@
+inline void SWAP(int &a, int &b) { int c = a; a = b; b = c; }
+
+
+void qsort(int *a, int l, int r)
+{
+   if (l > r) return;
+
+   int L = l, R = r;
+   int pivot = a[(L + R) / 2];
+
+   while (L <= R)
+   {
+      while (a[L] < pivot) L++;
+      while (pivot < a[R]) R--;
+
+      if (L <= R)
+      {
+         SWAP(a[L], a[R]);
+         L++;
+         R--;
+      }
+   }
+
+   if (l < R) qsort(a, l, R);
+   if (L < r) qsort(a, L, r);
+
+}
