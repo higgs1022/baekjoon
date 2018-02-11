@@ -1,0 +1,48 @@
+log-time 시간복잡도로 거듭제곱이나 곱셈을 구하는방법
+
+
+거듭제곱
+
+template <typename I>
+I power(I base, I super, I modular)
+{
+	I result = 1;
+	while(super)
+	{
+		if(super & 1) result = result * base % modular;
+		base = base * base % modular;
+		super >>= 1;
+	}
+	return result;
+}
+
+
+곱셈
+
+template <typename I>
+I mult(I multiplicand, I multiplier, I modular)
+{
+	I result = 0;
+	while(multiplier)
+	{
+		if(multiplier & 1) result = (result + multiplicand) % modular;
+		multiplicand = (multiplicand + multiplicand) % modular;
+		multiplier >>= 1;
+	}
+}
+
+곱셈은 그냥 곱셈 연산을 사용하는것이 하드웨어적으로 작동해서 더 빠르지만
+곱셈 도중에 오버플로우 가능성이 있다면 pow 도중에 곱셈을 곱셈 함수로 사용하여 오버플로를 피할수 있다
+
+template <typename I>
+I power_safe(I base, I super, I modular)
+{
+	I result = 1;
+	while(super)
+	{
+		if(super & 1) result = mult(result, base, modular);
+		base = mult(base,base,modular);
+		super >>=1;
+	}
+	return result;
+}
