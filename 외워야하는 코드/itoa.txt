@@ -1,0 +1,17 @@
+#include <iostream>
+using namespace std;
+
+char* itoa(int val, int base)
+{
+	int i = 30;
+	static char buff[36];
+	for (; i&&val; i--, val /= base)
+		buff[i] = "0123456789abcdef"[val%base];
+	return &buff[i + 1];
+}
+
+
+int main()
+{
+	cout << itoa(1024, 2) << endl;
+}
