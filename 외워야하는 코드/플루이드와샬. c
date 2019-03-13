@@ -1,0 +1,71 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdio.h>
+
+int min(int a, int b)
+{
+	if (a < b)
+		return a;
+	else
+		return b;
+}
+
+int N;
+
+int map[505][505];
+
+int MAX = -1;
+
+int main()
+{
+	freopen("Text.txt", "r", stdin);
+
+	scanf("%d", &N);
+
+	int x, y;
+
+//i==j는 0으로 초기화하고 나머지는 무한대로 만든다
+	for (int i = 0; i <= 500; i++)
+	{
+		for (int j = 0; j <= 500; j++)
+		{
+			map[i][j] = 212345678;
+		}
+	}
+	for (int i = 0; i <= 500; i++)
+	{
+		
+			map[i][i] = 0;
+		
+	}
+
+	for (int i = 0; i < N; i++)
+	{
+		scanf("%d %d", &x, &y);
+		if (MAX < x)
+			MAX = x;
+		if (MAX < y)
+			MAX = y;
+		x--;
+		y--;
+		map[x][y] = 1;
+	}
+
+//핵심은 4줄
+	for (int k = 0; k < N; k++)
+		for (int i = 0; i < N; i++)
+			for (int j = 0; j < N; j++)
+				map[i][j] = min(map[i][j], map[i][k] + map[k][j]);
+
+	int sum = 0;
+	for (int i = 0; i < MAX; i++)
+	{
+		for (int j = 0; j < MAX; j++)
+		{
+			if (map[i][j] != 212345678)
+				sum += map[i][j];
+		}
+	}
+
+	printf("%.3f\n", (float)sum / ((MAX)*(MAX - 1)));
+}
