@@ -1,0 +1,66 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+#define LIMIT 2123456789
+
+int N, M;
+int dist[300];
+vector<pair<int, pair<int, int>>> values;
+
+void bellman_Ford()
+{
+	dist[1] = 0;
+	for (int i = 1; i <= N - 1; i++)
+	{
+		for (int j = 0; j < values.size(); j++)
+		{
+			int val = values[j].first;
+			int left = values[j].second.first;
+			int right = values[j].second.second;
+
+			if (dist[left] == LIMIT)
+				continue;
+			if (dist[right] > dist[left] + val) dist[right] = dist[left] + val;
+		}
+	}
+
+	for (int i = 0; i < values.size(); i++)
+	{
+		int val = values[i].first;
+		int left = values[i].second.first;
+		int right = values[i].second.second;
+
+		if (dist[left] == LIMIT)
+			continue;
+		if (dist[right] > dist[left] + val)
+		{
+			printf("bug\n");
+			return;
+		}
+	}
+	if (dist[N] != LIMIT)
+		printf("%d\n", dist[N]);
+	else
+		printf("bug\n");
+}
+
+int main() {
+	freopen("Text.txt", "r", stdin);
+	scanf("%d %d", &N, &M);
+	for (int i = 0; i < M; i++)
+	{
+		int a, b, c;
+		scanf("%d %d %d", &a, &b, &c);
+		values.push_back(make_pair(c, make_pair(a, b)));
+	}
+
+	for (int i = 1; i <= N; i++)
+	{
+		dist[i] = LIMIT;
+	}
+
+	bellman_Ford();
+}
